@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c72m1jo17pb6l"]
+[gd_scene load_steps=8 format=3 uid="uid://c72m1jo17pb6l"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_s8vhb"]
 
@@ -6,16 +6,51 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dcba4"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_jcnxt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cspvp"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_jcnxt")
+metallic_specular = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_npxpa"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_nmmeu"]
+resource_local_to_scene = true
+size = Vector2(2, 1)
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_s8vhb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+layers = 2
 mesh = SubResource("CapsuleMesh_qflvl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_dcba4")
 
+[node name="Viewport" type="Node" parent="."]
+
+[node name="SnapshotViewport" type="SubViewport" parent="Viewport"]
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="SnapshotCamera3D" type="Camera3D" parent="Viewport/SnapshotViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.61946, -0.668714)
+cull_mask = 1048573
+
+[node name="SnapshotDisplayPlane" type="MeshInstance3D" parent="Viewport/SnapshotViewport"]
+material_override = SubResource("StandardMaterial3D_cspvp")
+mesh = SubResource("PlaneMesh_npxpa")
+skeleton = NodePath("../..")
+
 [node name="Head" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.612801, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.612801, -0.496712)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.164539)
+cull_mask = 1048573
+
+[node name="MainCameraDisplayPlane" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0261481, -1.22415)
+mesh = SubResource("QuadMesh_nmmeu")
