@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://da5p1gf1jq2ia"
-path.s3tc="res://.godot/imported/Plane-d83340c1602c025ca2b8fcd72d30fc6e_Marble_300.png-fd1586039ae5d4aa7eb3aa721dcf0898.s3tc.ctex"
+uid="uid://cp6yplhonw4pi"
+path.s3tc="res://.godot/imported/TempleFloor-6254359406ac70e224e7d31f1472469d_Marble_300.png-85b87acdac00bf8723f6a9a032db35ec.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://assets/models/Plane-d83340c1602c025ca2b8fcd72d30fc6e_Marble_300.png"
-dest_files=["res://.godot/imported/Plane-d83340c1602c025ca2b8fcd72d30fc6e_Marble_300.png-fd1586039ae5d4aa7eb3aa721dcf0898.s3tc.ctex"]
+source_file="res://assets/models/TempleFloor-6254359406ac70e224e7d31f1472469d_Marble_300.png"
+dest_files=["res://.godot/imported/TempleFloor-6254359406ac70e224e7d31f1472469d_Marble_300.png-85b87acdac00bf8723f6a9a032db35ec.s3tc.ctex"]
 
 [params]
 

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://72aev4kgrmdl"
-path="res://.godot/imported/Plane.fbx-d83340c1602c025ca2b8fcd72d30fc6e.scn"
+uid="uid://cqt2l1fqv04g7"
+path="res://.godot/imported/TempleFloor.fbx-6254359406ac70e224e7d31f1472469d.scn"
 
 [deps]
 
-source_file="res://assets/models/Plane.fbx"
-dest_files=["res://.godot/imported/Plane.fbx-d83340c1602c025ca2b8fcd72d30fc6e.scn"]
+source_file="res://assets/models/TempleFloor.fbx"
+dest_files=["res://.godot/imported/TempleFloor.fbx-6254359406ac70e224e7d31f1472469d.scn"]
 
 [params]
 
@@ -29,6 +29,13 @@ animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
-_subresources={}
+_subresources={
+"nodes": {
+"PATH:RootNode/TempleFloor": {
+"generate/physics": true,
+"physics/shape_type": 2
+}
+}
+}
 gltf/naming_version=1
 gltf/embedded_image_handling=1
