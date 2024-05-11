@@ -1,8 +1,9 @@
 extends CharacterBody3D
 
-var speed
-const WALK_SPEED: float    = 2.0
-const SPRINT_SPEED: float  = 2.0
+var speed: float = 0.0
+const ACCELERATION: float  = 2.0
+const DECELERATION: float  = 5.0
+const MAX_SPEED: float     = 6.0
 const JUMP_VELOCITY: float = 4.8
 const SENSITIVITY: float   = 0.004
 const BOB_FREQ: float      = 2.4
@@ -49,9 +50,9 @@ func snap_image():
 	snapshot_display.mesh = plane_mesh
 
 	snapshot_display.global_transform = camera.global_transform * Transform3D.IDENTITY.translated(Vector3(0, 0, -2))
-	snapshot_display.rotation_degrees = Vector3(randi_range(50, 170), randi_range(50, 170), randi_range(50, 170),)
+	snapshot_display.rotation_degrees = Vector3(randi_range(50, 170), randi_range(1, 359), randi_range(1, 359),)
 
-	var snapshot_container: Node = get_node("/root/World/SnapshotContainer")
+	var snapshot_container: Node = get_node("/root/Level/SnapshotContainer")
 	if snapshot_container:
 		snapshot_container.add_child(snapshot_display)
 	else:
@@ -59,32 +60,34 @@ func snap_image():
 
 
 func _physics_process(delta):
+	var is_moving: bool = false
+
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
-	if Input.is_action_pressed("sprint"):
-		speed = SPRINT_SPEED
-	else:
-		speed = WALK_SPEED
+	var input_dir: Vector2 = Input.get_vector("", "", "move_forward", "move_backwards")
 
-	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_backwards")
-	var direction: Vector3 = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if is_on_floor():
-		if direction:
-			velocity.x = direction.x * speed
-			velocity.z = direction.z * speed
-		else:
-			velocity.x = lerp(velocity.x, direction.x * speed, delta * 7.0)
-			velocity.z = lerp(velocity.z, direction.z * speed, delta * 7.0)
+	if Input.is_action_pressed("move_forward"):
+		speed = min(speed + ACCELERATION * delta, MAX_SPEED)
+		is_moving = true
 	else:
-		velocity.x = lerp(velocity.x, direction.x * speed, delta * 3.0)
-		velocity.z = lerp(velocity.z, direction.z * speed, delta * 3.0)
+		speed = max(speed - DECELERATION * delta, 0.0)
+		is_moving = speed > 0
+
+	var direction: Vector3 = (head.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+
+	if is_on_floor() and is_moving:
+		velocity.x = direction.x * speed
+		velocity.z = direction.z * speed
+	else:
+		velocity.x = lerp(velocity.x, 0.0, delta * 5.0)
+		velocity.z = lerp(velocity.z, 0.0, delta * 5.0)
 
 	t_bob += delta * velocity.length() * float(is_on_floor())
 	camera.transform.origin = _headbob(t_bob)
 
-	var velocity_clamped = clamp(velocity.length(), 0.5, SPRINT_SPEED * 2)
-	var target_fov       = BASE_FOV + FOV_CHANGE * velocity_clamped
+	var velocity_clamped = clamp(velocity.length(), 0.5, MAX_SPEED * 2)
+	var target_fov = BASE_FOV + FOV_CHANGE * velocity_clamped
 	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
 
 	move_and_slide()
@@ -92,7 +95,7 @@ func _physics_process(delta):
 
 func _headbob(time) -> Vector3:
 	var pos: Vector3 = Vector3.ZERO
-	pos.y = sin(time * BOB_FREQ) * BOB_AMP
+	pos.y = sin(time * BOB_FREQ) * BOB_AMP * 4  # Increase bob amplitude for a more robotic feel
 	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
 	return pos
 
