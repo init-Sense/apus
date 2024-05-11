@@ -411,7 +411,7 @@ transform = Transform3D(0.289252, 0.18636, -0.189003, -0.0335322, 0.302961, 0.24
 transform = Transform3D(-7.73692e-08, 0, -1, 0, 1, 0, 1.77, 0, -4.37114e-08, 0.341418, 3.33786e-06, 9.37823)
 
 [node name="Text1" type="MeshInstance3D" parent="Texts"]
-transform = Transform3D(-7.73692e-08, 0, 1, 0, 1, 0, -1.77, 0, -4.37114e-08, -10.6756, 0.599072, 0)
+transform = Transform3D(-1.09278e-07, 0, 1.413, 0, 1.413, 0, -2.5, 0, -6.17642e-08, -10.6756, 0.712081, 0)
 mesh = SubResource("QuadMesh_14svt")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_lxigk")
@@ -467,7 +467,7 @@ transform = Transform3D(0.753976, 0, -0.656902, 0, 1, 0, 0.656902, 0, 0.753976, 
 [node name="SnapshotContainer" type="Node" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("23_duf7x")]
-transform = Transform3D(0.380726, 0, 0, 0, 0.380726, 0, 0, 0, 0.380726, 0.336818, 0.422003, -8.82281)
+transform = Transform3D(0.380726, 0, 0, 0, 0.380726, 0, 0, 0, 0.380726, 0.336818, 0.422003, -8.06278)
 
 [node name="Root Scene10" parent="." instance=ExtResource("23_jw08l")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.341419, 3.33786e-06, -10.6218)
