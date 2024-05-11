@@ -1,9 +1,9 @@
 extends CharacterBody3D
 
 var speed: float = 0.0
-const ACCELERATION: float  = 2.0
+const ACCELERATION: float  = 1.5
 const DECELERATION: float  = 5.0
-const MAX_SPEED: float     = 6.0
+const MAX_SPEED: float     = 3.0
 const JUMP_VELOCITY: float = 4.8
 const SENSITIVITY: float   = 0.004
 const BOB_FREQ: float      = 2.4
@@ -31,7 +31,7 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * SENSITIVITY)
 		camera.rotate_x(-event.relative.y * SENSITIVITY)
-		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
 
 func snap_image():
@@ -56,7 +56,7 @@ func snap_image():
 		snapshot_display.mesh = plane_mesh
 
 
-		snapshot_display.global_transform = camera.global_transform * Transform3D.IDENTITY.translated(Vector3(0, 0, -2))
+		snapshot_display.global_transform = camera.global_transform * Transform3D.IDENTITY.translated(Vector3(0, 0, -1))
 		snapshot_display.rotation_degrees = Vector3(randi_range(50, 170), randi_range(1, 359), randi_range(1, 359),)
 
 		var snapshot_container: Node = get_node("/root/World/SnapshotContainer")
@@ -75,7 +75,7 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
-	var input_dir: Vector2 = Input.get_vector("", "", "move_forward", "move_backwards")
+	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forward", "move_backwards")
 
 	if Input.is_action_pressed("move_forward"):
 		speed = min(speed + ACCELERATION * delta, MAX_SPEED)
@@ -105,7 +105,7 @@ func _physics_process(delta):
 
 func _headbob(time) -> Vector3:
 	var pos: Vector3 = Vector3.ZERO
-	pos.y = sin(time * BOB_FREQ) * BOB_AMP * 4  # Increase bob amplitude for a more robotic feel
+	pos.y = sin(time * BOB_FREQ) * BOB_AMP * 2
 	pos.x = cos(time * BOB_FREQ / 2) * BOB_AMP
 	return pos
 
