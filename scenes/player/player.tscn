@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://c72m1jo17pb6l"]
+[gd_scene load_steps=9 format=3 uid="uid://c72m1jo17pb6l"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_s8vhb"]
+[ext_resource type="AudioStream" uid="uid://gd1qkxhr6nr2" path="res://audio/apusfx.mp3" id="2_krmmb"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qflvl"]
 
@@ -57,3 +58,4 @@ visible = false
 mesh = SubResource("QuadMesh_nmmeu")
 
 [node name="SnapshotSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_krmmb")
