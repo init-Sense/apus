@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bxjey6kejq0qo"]
+[gd_scene load_steps=44 format=3 uid="uid://bxjey6kejq0qo"]
 
 [ext_resource type="PackedScene" uid="uid://cokgdo1nbw7iv" path="res://assets/models/Column.fbx" id="1_cm3ij"]
 [ext_resource type="Texture2D" uid="uid://jy0u6u7egibd" path="res://assets/textures/sky.jpg" id="1_p1lly"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://dddfwnfp0txt5" path="res://assets/models/TextWall.fbx" id="22_8yq1p"]
 [ext_resource type="PackedScene" uid="uid://c72m1jo17pb6l" path="res://scenes/player/player.tscn" id="23_duf7x"]
 [ext_resource type="PackedScene" uid="uid://cqt2l1fqv04g7" path="res://assets/models/TempleFloor.fbx" id="23_jw08l"]
+[ext_resource type="AudioStream" uid="uid://c505oa6krg2oa" path="res://audio/apus.mp3" id="24_jqq4v"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_yyhdt"]
 panorama = ExtResource("1_p1lly")
@@ -515,3 +516,7 @@ mesh = SubResource("BoxMesh_k6f68")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_nftif")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("24_jqq4v")
+autoplay = true
