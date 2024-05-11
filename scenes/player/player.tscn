@@ -55,3 +55,5 @@ cull_mask = 1048573
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0261481, -1.19487)
 visible = false
 mesh = SubResource("QuadMesh_nmmeu")
+
+[node name="SnapshotSound" type="AudioStreamPlayer3D" parent="."]
