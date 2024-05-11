@@ -53,4 +53,5 @@ cull_mask = 1048573
 
 [node name="MainCameraDisplayPlane" type="MeshInstance3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0261481, -1.22415)
+visible = false
 mesh = SubResource("QuadMesh_nmmeu")

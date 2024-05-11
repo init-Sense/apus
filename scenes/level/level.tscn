@@ -29,3 +29,5 @@ shadow_enabled = true
 environment = SubResource("Environment_7qyhg")
 
 [node name="Floor" parent="." instance=ExtResource("1_eetxe")]
+
+[node name="SnapshotContainer" type="Node" parent="."]
