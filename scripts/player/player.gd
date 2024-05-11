@@ -18,7 +18,10 @@ var gravity: float         = 9.8
 @onready var snapshot_viewport: SubViewport = $Viewport/SnapshotViewport
 @onready var snapshot_camera: Camera3D = $Viewport/SnapshotViewport/SnapshotCamera3D
 @onready var main_camera_display_plane: MeshInstance3D = $Head/MainCameraDisplayPlane
+@onready var snapshot_sound: AudioStreamPlayer3D = $SnapshotSound
 
+var snapshot_cooldown: float = 1.0
+var last_snapshot_time: float = 0.0
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -32,31 +35,38 @@ func _unhandled_input(event):
 
 
 func snap_image():
-	snapshot_camera.global_transform = camera.global_transform
+	var current_time: float = Time.get_ticks_msec() / 1000.0
+	if current_time - last_snapshot_time >= snapshot_cooldown:
+		last_snapshot_time = current_time
+		snapshot_camera.global_transform = camera.global_transform
+		snapshot_viewport.set_world_3d(get_world_3d())
+		var snapshot_image := snapshot_viewport.get_texture().get_image()
 
-	snapshot_viewport.set_world_3d(get_world_3d())
-	var snapshot_image := snapshot_viewport.get_texture().get_image()
+		var snapshot_texture := ImageTexture.new()
+		snapshot_texture.set_image(snapshot_image)
 
-	var snapshot_texture := ImageTexture.new()
-	snapshot_texture.set_image(snapshot_image)
+		var snapshot_display := MeshInstance3D.new()
+		var plane_mesh := PlaneMesh.new()
+		plane_mesh.size = Vector2(1.0, 0.5625)
 
-	var snapshot_display := MeshInstance3D.new()
-	var plane_mesh       := PlaneMesh.new()
-	plane_mesh.size = Vector2(1.0, 0.5625)
+		var material: StandardMaterial3D = StandardMaterial3D.new()
+		material.albedo_texture = snapshot_texture
+		material.cull_mode = StandardMaterial3D.CULL_DISABLED
+		snapshot_display.material_override = material
+		snapshot_display.mesh = plane_mesh
 
-	var material: StandardMaterial3D = StandardMaterial3D.new()
-	material.albedo_texture = snapshot_texture
-	snapshot_display.material_override = material
-	snapshot_display.mesh = plane_mesh
 
-	snapshot_display.global_transform = camera.global_transform * Transform3D.IDENTITY.translated(Vector3(0, 0, -2))
-	snapshot_display.rotation_degrees = Vector3(randi_range(50, 170), randi_range(1, 359), randi_range(1, 359),)
+		snapshot_display.global_transform = camera.global_transform * Transform3D.IDENTITY.translated(Vector3(0, 0, -2))
+		snapshot_display.rotation_degrees = Vector3(randi_range(50, 170), randi_range(1, 359), randi_range(1, 359),)
 
-	var snapshot_container: Node = get_node("/root/Level/SnapshotContainer")
-	if snapshot_container:
-		snapshot_container.add_child(snapshot_display)
-	else:
-		print("SnapshotContainer not found.")
+		var snapshot_container: Node = get_node("/root/World/SnapshotContainer")
+		if snapshot_container:
+			snapshot_container.add_child(snapshot_display)
+		else:
+			print("SnapshotContainer not found.")
+
+		snapshot_sound.pitch_scale = randf_range(0.6, 1.5)
+		snapshot_sound.play() 
 
 
 func _physics_process(delta):
